@@ -77,7 +77,6 @@ export default {
       try {
         await this.$store.dispatch("auth/login", this.user);
         this.$router.push("/")
-        console.log(123);
       } catch (error) {
         this.$toast.error('Login yoki parol xato')
       }

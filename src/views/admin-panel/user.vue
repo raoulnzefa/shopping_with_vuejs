@@ -1,23 +1,28 @@
 <template>
-  <v-app>
-      <v-data-table
-        dense
-        :headers="headers"
-        :items="users"
-        class="mt-1"
-        hide-default-footer
-      ></v-data-table>
-      <p>hdskjfhsdjk</p>
-  </v-app>
+    <div>
+        <v-data-table
+                dense
+                :headers="headers"
+                :items="userList"
+                class="mt-1"
+                hide-default-footer
+        ></v-data-table>
+        <Paginate store="user" collection="userList" method="uploadUsers"/>
+    </div>
 </template>
 
 <script>
-export default {
-    name: 'user',
-    data(){
-        return {
-            headers: [
-                {
+    import {mapGetters} from 'vuex'
+    import Paginate from "../../components/Paginate";
+
+    export default {
+        name: 'user',
+        components: {Paginate},
+        comments: {},
+        data() {
+            return {
+                headers: [
+                    {
                         text: 'ID',
                         divider: true,
                         value: 'id',
@@ -42,10 +47,33 @@ export default {
                         class: "green lighten-2",
 
                     },
-            ]
+                ]
+            }
+        },
+        created() {
+            this.getUsers()
+        },
+        computed: {
+            ...mapGetters({
+                userList: 'user/getUsers',
+                getCurrentPage: 'user/getCurrentPage'
+            })
+        },
+        methods: {
+            async getUsers() {
+                try {
+                    await this.$store.dispatch('user/uploadUsers', {
+                        url: "/users?page=",
+                        method: "get",
+                        pageNumber: this.getCurrentPage,
+                        body: {},
+                    });
+                } catch (error) {
+                    this.$toast.error(error)
+                }
+            },
         }
     }
-}
 </script>
 
 <style>

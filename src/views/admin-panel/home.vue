@@ -51,7 +51,7 @@ import { mapGetters } from 'vuex'
       cards: ['Today', 'Yesterday'],
       drawer: true,
       links: [
-        ['mdi-inbox-arrow-down', 'Foydalanuvchilar', '/users'],
+        ['mdi-account-supervisor', 'Foydalanuvchilar', '/users'],
         ['mdi-send', 'Tavarlar','/products'],
         ['mdi-delete', 'Trash'],
         ['mdi-alert-octagon', 'Spam'],
